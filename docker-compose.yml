@@ -1,0 +1,103 @@
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+    image: "${IMAGE_NAME}:${IMAGE_VERSION}"
+    container_name: "${IMAGE_NAME}"
+    volumes:
+      - ./app:/app
+      - "${MOUNT_DATA_DIR}:${DATA_DIR}"
+      - "${MOUNT_MODEL_DIR}:${MODEL_DIR}"
+      - "${MOUNT_LOG_DIR}:${LOG_DIR}"
+    ports:
+      - "${PORT_NUMBER}:${PORT_NUMBER}"
+    command: python3 main.py
+    env_file: ./.env
+    restart: unless-stopped
+    networks:
+      - app-network
+    depends_on:
+      - db
+      - etcd
+      - minio
+      - milvus-standalone
+
+  db:
+    container_name: mysql
+    image: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    env_file: ./.env
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  etcd:
+    container_name: milvus-etcd
+    image: quay.io/coreos/etcd:v3.5.5
+    environment:
+      - ETCD_AUTO_COMPACTION_MODE=revision
+      - ETCD_AUTO_COMPACTION_RETENTION=1000
+      - ETCD_QUOTA_BACKEND_BYTES=4294967296
+      - ETCD_SNAPSHOT_COUNT=50000
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-./volumes}/etcd:/etcd
+    command: etcd -advertise-client-urls=http://etcd:2379 -listen-client-urls=http://0.0.0.0:2379 --data-dir=/etcd
+    ports:
+      - "2379:2379"
+    networks:
+      - app-network
+
+  minio:
+    container_name: milvus-minio
+    image: minio/minio:RELEASE.2023-03-20T20-16-18Z
+    env_file: ./.env
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-./volumes}/minio:/minio_data
+    command: server /minio_data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - app-network
+
+  milvus-standalone:
+    container_name: milvus-standalone
+    image: milvusdb/milvus:v2.5.7
+    command: [ "milvus", "run", "standalone" ]
+    security_opt:
+      - seccomp:unconfined
+    env_file: ./.env
+    environment:
+      - ETCD_ENDPOINTS=etcd:2379
+      - MINIO_ADDRESS=minio:9000
+      - COMMON_STORAGETYPE=minio
+      - MILVUS_AUTH_ENABLE=${MILVUS_AUTH_ENABLE}
+      - MILVUS_AUTH_USER=${MILVUS_AUTH_USER}
+      - MILVUS_AUTH_PASSWORD=${MILVUS_AUTH_PASSWORD}
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-./volumes}/milvus:/var/lib/milvus
+    ports:
+      - "19530:19530"
+      - "9091:9091"
+    depends_on:
+      - etcd
+      - minio
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
