@@ -1,0 +1,32 @@
+REPORT_ERROR_MESSAGE_OUTPUT: "Chúng tôi rất tiếc về vấn đề quý khách đang gặp phải. Quý khách vui lòng chờ admin sẽ giải đáp vấn đề này"
+
+ROUTING_HUMAN_URL: "https://support"
+
+OUTPUT_AGENT_OTHER: "Xin lỗi, chúng tôi không hiểu câu hỏi của Quý khách. Quý khách có thể cung cấp thêm thông tin không ạ."
+
+OUTPUT_AGENT_NOT_ENOUGH_INFO: "Cảm ơn Quý khách đã đặt câu hỏi trên tuy nhiên Trợ lý ảo của chúng tôi chưa thể cung cấp cho Quý khách câu trả lời ngay lúc này. VNUK xin phép ghi nhận và hoàn thiện trong thời gian tới để cung cấp trải nghiệm tốt hơn cho Quý khách"
+
+MESSAGE_NOTI_ORDER: |
+  
+  Đây là một số vật dụng kèm theo:
+    - 1 bộ Dĩa, đĩa giấy (10 chiếc)
+    - 1 bộ nến cây hoặc nến số
+    - 1 dao cắt bánh
+  Nếu bạn muốn đặt thêm xin hãy cho tôi biết. Giá cả một số vật dụng:
+    - Dĩa muỗng: 10.000 VNĐ/bộ  
+    - Mũ sinh nhật: 8.000 VNĐ/cái  
+    - Topper Happy Birthday: 12.000 VNĐ/que  
+  
+  Khách hàng có thể cung cấp thêm thông tin như ghi chú, chữ viết trên bánh, nến số để tôi có thể chỉnh sửa và thêm vào đơn hàng giúp quý khách. 
+  Cảm ơn quý khách.
+
+MESSAGE_NOT_FOUND_CAKE: "Xin lỗi, hiện tôi không tìm thấy thêm mẫu bánh nào khác phù hợp với yêu cầu của bạn và chưa được hiển thị."
+MESSAGE_FOUND_CAKE_AVAILABILITY: "Bánh đã có sẵn trong cửa hàng, khách hàng có thể lấy bánh đúng thời gian. Và tại cửa hàng {shop}"
+MESSAGE_FOUND_CAKE_NOT_SIZE: "Vì bạn đặt bánh khá gấp, đầu bếp không thể chuẩn bị kịp, chỉ có bánh {cake_name} với kích thước {cake_size}cm với giá {cake_price}. Bạn có muốn đặt bánh này không. Nếu không bạn hãy chọn mẫu khác hoặc thời gian khác nhé"
+MESSAGE_NOT_FOUND_CAKE_AVAILABILITY: "Bánh không sẵn trong cửa hàng, có thể chọn bánh có sẵn hoặc thay đổi thời gian nhận hàng."
+MESSAGE_FOUND_CAKE_AVAILABILITY_CHECK_TIME: "Đầu bếp có thể làm và bạn có thể làm và giao hàng đúng hẹn"
+
+MESSAGE_NOT_FOUND_CAKE_SPECIAL_AVAILABILITY: "Bánh bạn đặt là bánh đặt biệt nên cần thời gian chuẩn bị và thời gian làm ít nhất 6h liên tục trong ngày. Vậy nên nếu bạn đặt từ 0h->9h thì bánh có thể làm xong lúc 16h, vào thời gian còn lại sẽ vào 16h ngày hôm sau"
+
+MESSAGE_HIGH_TIER_DISTANCE: "Xin lỗi, vì khách hàng ở cách xa cửa hàng > 10km, nên phí ship sẽ được nhân viên báo lại sau ạ, nhưng tạm thời fee ships sẽ là 15000VND"
+MESSAGE_NOT_DISTANCE: "Xin lỗi, tôi chưa thể xác định vị trí xác địa chỉ nhận hàng của bạn, nên phí ship sẽ được nhân viên báo cáo sau ạ, nhưng tạm thời fee ships sẽ là 15000VND"
