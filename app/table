@@ -1,0 +1,75 @@
+Table user {
+  id integer [primary key]
+  username varchar [unique]
+  passwork varchar
+  role varchar
+  created_at timestamp
+  updated_at timestamp
+  platform varchar
+  platform_customer_id varchar
+}
+
+Table thread {
+  id integer [primary key]
+  user_id integer
+  created_at timestamp
+}
+
+Table faq {
+  id integer [primary key]
+  vector FLOAT_VECTOR
+  question varchar
+  answer varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table chunk {
+  id integer [primary key]
+  vector FLOAT_VECTOR
+  document_id integer
+  content varchar
+  chunk_index integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table document {
+  id integer [primary key]
+  content MEDIUMTEXT
+  filename varchar
+  path varchar
+  source varchar
+  user_id varchar
+  category_id integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table message {
+  id integer [primary key]
+  thread_id integer
+  user_id varchar
+  user_message varchar
+  bot_message varchar
+  platform_message_id varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table category {
+  id integer [primary key]
+  name varchar
+  description varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: thread.user_id > user.id
+Ref: document.user_id > user.id
+Ref: document.category_id > category.id
+Ref: message.user_id > user.id
+Ref: message.thread_id > thread.id
+Ref: chunk.document_id > document.id
+
+Ref: "category"."id" < "category"."name"
