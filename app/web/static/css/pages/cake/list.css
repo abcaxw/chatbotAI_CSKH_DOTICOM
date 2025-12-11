@@ -1,0 +1,373 @@
+/* Cake List CSS */
+:root {
+    --cake-primary: #ff6b6b;  /* Màu chủ đạo cho Cake */
+}
+
+/* Override header icon color */
+.page-header h2 i {
+    color: var(--cake-primary);
+}
+
+/* Override primary button color */
+.btn-add {
+    background-color: var(--cake-primary);
+}
+
+.btn-add:hover {
+    background-color: #ff5252;
+}
+
+.search-box button {
+    background-color: var(--cake-primary);
+}
+
+/* View toggle button */
+.view-toggle {
+    display: flex;
+    margin-left: auto;
+    margin-bottom: 1rem;
+}
+
+.view-toggle button {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.view-toggle button:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.view-toggle button:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+.view-toggle button.active {
+    background-color: var(--cake-primary);
+    color: white;
+    border-color: var(--cake-primary);
+}
+
+/* Cake Table Styles */
+.cakes-table {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.cakes-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cakes-table th, 
+.cakes-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.cakes-table th {
+    background-color: var(--light-color);
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.cakes-table tr:hover {
+    background-color: rgba(255, 107, 107, 0.05);
+}
+
+.cake-img-cell {
+    width: 80px;
+}
+
+.cake-img-cell img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.cake-img-cell img:hover {
+    transform: scale(1.1);
+}
+
+.cake-description {
+    max-width: 300px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.view-action, .edit-action, .delete-action {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s;
+}
+
+.view-action {
+    background-color: #17a2b8;
+}
+
+.edit-action {
+    background-color: var(--cake-primary);
+}
+
+.delete-action {
+    background-color: var(--danger-color);
+}
+
+.view-action:hover {
+    background-color: #138496;
+}
+
+.edit-action:hover {
+    background-color: #ff5252;
+}
+
+.delete-action:hover {
+    background-color: #c0392b;
+}
+
+/* Cake Grid Styles */
+.cakes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.cake-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cake-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px var(--shadow-color);
+}
+
+.cake-card-image {
+    height: 180px;
+    overflow: hidden;
+}
+
+.cake-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.cake-card:hover .cake-card-image img {
+    transform: scale(1.05);
+}
+
+.cake-card-body {
+    padding: 1.2rem;
+}
+
+.cake-card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 0.8rem;
+    color: var(--text-color);
+}
+
+.cake-card-category,
+.cake-card-price {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.cake-card-category i,
+.cake-card-price i {
+    width: 20px;
+    margin-right: 0.5rem;
+    color: var(--cake-primary);
+}
+
+.cake-card-price {
+    font-weight: 600;
+    color: var(--cake-primary);
+}
+
+.cake-card-description {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.cake-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.8rem 1.2rem;
+    border-top: 1px solid var(--border-color);
+    gap: 0.5rem;
+}
+
+/* Image Preview Modal */
+.image-preview-content {
+    padding: 0 !important;
+    overflow: hidden;
+    max-width: 800px !important;
+    width: 90% !important;
+}
+
+.close-preview {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.close-preview:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#preview-image {
+    width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .cakes-table {
+        overflow-x: auto;
+    }
+    
+    .cakes-table th, 
+    .cakes-table td {
+        padding: 0.8rem;
+    }
+    
+    .cake-description {
+        max-width: 200px;
+    }
+    
+    .cakes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .actions {
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+    
+    .cake-description {
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 576px) {
+    .cakes-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cake-card-image {
+        height: 200px;
+    }
+}
+
+.cake-price-range {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #e44d26;
+    margin: 8px 0;
+}
+
+/* Trong list view */
+.category-list-item .cake-price-range {
+    margin-top: 4px;
+}
+
+/* Trong grid view */
+.category-card .cake-price-range {
+    text-align: center;
+    margin: 8px 0;
+}
+
+/* Filter Options - Tùy chỉnh */
+.filter-options {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-options select {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background-color: white;
+    color: var(--text-color);
+    min-width: 150px;
+    font-size: 0.9rem;
+}
+
+#filter-source {
+    background-color: #fff8f8;
+    border-color: #ffcece;
+}
+
+#filter-source option {
+    padding: 6px;
+}
+
+#filter-source option[value="BonPas"] {
+    color: #e44d26;
+}
+
+#filter-source option[value="DongTien"] {
+    color: #0078d7;
+}
+
+/* Responsive styles for filters */
+@media (max-width: 768px) {
+    .filter-options {
+        flex-wrap: wrap;
+    }
+    
+    .filter-options select {
+        flex: 1;
+        min-width: 120px;
+    }
+} 

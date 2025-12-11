@@ -1,0 +1,115 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Quản lý FAQ - Đồng Tiến & Bonpas{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', path='/css/pages/faq/list.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2><i class="fas fa-question-circle"></i> Quản lý Câu hỏi thường gặp (FAQ)</h2>
+    <a href="/faq/add" class="btn-add"><i class="fas fa-plus"></i> Thêm FAQ Mới</a>
+</div>
+
+<div class="search-filter-container">
+    <div class="search-box">
+        <form action="/faq/web" method="get">
+            <input type="text" name="q" placeholder="Tìm kiếm câu hỏi..." value="{{ query }}">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+</div>
+
+<!-- Badges lọc theo danh mục -->
+<div class="filter-badges">
+    <span class="filter-badge {% if not category_filter %}active{% endif %}" data-category="">Tất cả</span>
+    {% for category in categories %}
+    <span class="filter-badge {% if category.id in category_filter %}active{% endif %}" data-category="{{ category.id }}">{{ category.name }}</span>
+    {% endfor %}
+</div>
+
+<div class="view-toggle">
+    <button id="list-view-btn" class="active"><i class="fas fa-list"></i></button>
+    <button id="grid-view-btn"><i class="fas fa-th-large"></i></button>
+</div>
+
+<!-- Accordion View -->
+<div id="faq-accordion" class="faq-accordion">
+    {% for faq in faqs %}
+    <div class="faq-item">
+        <div class="faq-header">
+            <div class="faq-title">
+                <i class="fas fa-question-circle faq-icon"></i>
+                <h3>{{ faq.question }}</h3>
+            </div>
+            <div class="faq-actions">
+                <span class="faq-category">{{ faq.category_name }}</span>
+                <a href="/faq/edit/{{ faq.id }}" class="edit-action" title="Sửa"><i class="fas fa-edit"></i></a>
+                <a href="#" class="delete-action" data-id="{{ faq.id }}" title="Xóa"><i class="fas fa-trash"></i></a>
+                <button class="toggle-btn" title="Xem câu trả lời"><i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+        <div class="faq-content">
+            <div class="faq-answer">
+                {{ faq.answer }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Grid View -->
+<div id="faq-grid" class="faq-grid" style="display: none;">
+    {% for faq in faqs %}
+    <div class="faq-card">
+        <div class="faq-card-header">
+            <div class="faq-card-icon">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <h3 class="faq-card-title">{{ faq.question }}</h3>
+        </div>
+        <div class="faq-card-body">
+            <span class="faq-card-category">{{ faq.category_name }}</span>
+            <div class="faq-card-answer">
+                {{ faq.answer }}
+            </div>
+        </div>
+        <div class="faq-card-footer">
+            <a href="/faq/edit/{{ faq.id }}" class="edit-action" title="Sửa"><i class="fas fa-edit"></i></a>
+            <a href="#" class="delete-action" data-id="{{ faq.id }}" title="Xóa"><i class="fas fa-trash"></i></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="pagination">
+    {% if page > 1 %}
+    <a href="/faq/web?page={{ page - 1 }}&q={{ query }}&categories={{ category_filter|join(',') }}" class="page-link"><i class="fas fa-chevron-left"></i></a>
+    {% endif %}
+    
+    {% for p in range(max(1, page - 2), min(total_pages + 1, page + 3)) %}
+    <a href="/faq/web?page={{ p }}&q={{ query }}&categories={{ category_filter|join(',') }}" class="page-link {% if p == page %}active{% endif %}">{{ p }}</a>
+    {% endfor %}
+    
+    {% if page < total_pages %}
+    <a href="/faq/web?page={{ page + 1 }}&q={{ query }}&categories={{ category_filter|join(',') }}" class="page-link"><i class="fas fa-chevron-right"></i></a>
+    {% endif %}
+</div>
+
+<!-- Modal xác nhận xóa -->
+<div id="delete-modal" class="modal">
+    <div class="modal-content">
+        <h3>Xác nhận xóa</h3>
+        <p>Bạn có chắc chắn muốn xóa câu hỏi này?</p>
+        <div class="modal-actions">
+            <button id="confirm-delete" class="btn-delete">Xóa</button>
+            <button id="cancel-delete" class="btn-cancel">Hủy</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='/js/pages/faq/list.js') }}"></script>
+{% endblock %} 

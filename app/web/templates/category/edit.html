@@ -1,0 +1,42 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Chỉnh sửa Danh mục - Đồng Tiến & Bonpas{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', path='/css/pages/category/edit.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2><i class="fas fa-edit"></i> Chỉnh sửa Danh mục</h2>
+    <a href="/category/web" class="btn-back"><i class="fas fa-arrow-left"></i> Quay lại</a>
+</div>
+
+<div class="edit-form-container">
+    <form id="editCategoryForm" class="edit-form">
+        <input type="hidden" id="categoryId" value="{{ id }}">
+        
+        <div class="form-group">
+            <label for="name">Tên danh mục</label>
+            <input type="text" id="name" name="name" value="{{ category.name }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Trạng thái</label>
+            <select id="status" name="status" required>
+                <option value="active" {% if category.status == 'active' %}selected{% endif %}>Hoạt động</option>
+                <option value="inactive" {% if category.status == 'inactive' %}selected{% endif %}>Không hoạt động</option>
+            </select>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save"><i class="fas fa-save"></i> Lưu thay đổi</button>
+            <a href="/category/web" class="btn-cancel"><i class="fas fa-times"></i> Hủy</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='/js/pages/category/edit.js') }}"></script>
+{% endblock %} 

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - DOTICOM</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <form action="/login" method="post">
+            <img src="/static/images/doti-logo.png" alt="Logo DOTICOM" class="logo">
+            <h2>Hệ Thống Đăng Nhập</h2>
+            <input type="text" name="username" placeholder="Tên đăng nhập" required>
+            <input type="password" name="password" placeholder="Mật khẩu" required>
+            <button type="submit">Đăng nhập</button>
+
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+            <div class="links">
+                <a href="/register/web">Tạo tài khoản</a> |
+                <a href="/forgot-password">Quên mật khẩu?</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

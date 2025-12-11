@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Chỉnh Sửa FAQ{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Chỉnh Sửa FAQ</h3>
+                </div>
+                <div class="card-body">
+                    <form id="editFaqForm" method="POST">
+                        <div class="row">
+                            <!-- Thông tin cơ bản -->
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="question">Câu hỏi <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="question" name="question" value="{{ faq.question }}" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="category">Danh mục <span class="text-danger">*</span></label>
+                                    <select class="form-control" id="category" name="category_id" required>
+                                        <option value="">Chọn danh mục</option>
+                                        {% for category in categories %}
+                                        <option value="{{ category.id }}" {% if category.id == faq.category_id %}selected{% endif %}>
+                                            {{ category.name }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="answer">Câu trả lời <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="answer" name="answer" rows="6" required>{{ faq.answer }}</textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="keywords">Từ khóa</label>
+                                    <input type="text" class="form-control" id="keywords" name="keywords" value="{{ faq.keywords|join(', ') }}" placeholder="Nhập từ khóa, phân tách bằng dấu phẩy">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="order">Thứ tự hiển thị</label>
+                                    <input type="number" class="form-control" id="order" name="order" min="0" value="{{ faq.order }}">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="status">Trạng thái <span class="text-danger">*</span></label>
+                                    <select class="form-control" id="status" name="status" required>
+                                        <option value="active" {% if faq.status == 'active' %}selected{% endif %}>Hiển thị</option>
+                                        <option value="inactive" {% if faq.status == 'inactive' %}selected{% endif %}>Ẩn</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Thông tin bổ sung -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="related_faqs">FAQ liên quan</label>
+                                    <select class="form-control" id="related_faqs" name="related_faqs" multiple>
+                                        {% for faq_item in faqs %}
+                                        <option value="{{ faq_item.id }}" {% if faq_item.id in faq.related_faq_ids %}selected{% endif %}>
+                                            {{ faq_item.question }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="tags">Tags</label>
+                                    <input type="text" class="form-control" id="tags" name="tags" value="{{ faq.tags|join(', ') }}" placeholder="Nhập tags, phân tách bằng dấu phẩy">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="views">Lượt xem</label>
+                                    <input type="number" class="form-control" id="views" name="views" min="0" value="{{ faq.views }}">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="helpful">Hữu ích</label>
+                                    <input type="number" class="form-control" id="helpful" name="helpful" min="0" value="{{ faq.helpful }}">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="not_helpful">Không hữu ích</label>
+                                    <input type="number" class="form-control" id="not_helpful" name="not_helpful" min="0" value="{{ faq.not_helpful }}">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Thống kê</label>
+                                    <div class="stats-info">
+                                        <p>Ngày tạo: {{ faq.created_at|datetime }}</p>
+                                        <p>Lần cập nhật cuối: {{ faq.updated_at|datetime }}</p>
+                                        <p>Tỷ lệ hữu ích: {{ (faq.helpful / (faq.helpful + faq.not_helpful) * 100)|round if (faq.helpful + faq.not_helpful) > 0 else 0 }}%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Lưu thay đổi
+                                </button>
+                                <a href="{{ url_for('faq.list') }}" class="btn btn-secondary">
+                                    <i class="fas fa-times"></i> Hủy
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/components/form-validation.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Khởi tạo form validation
+    const form = document.getElementById('editFaqForm');
+    const validator = new FormValidator(form, {
+        validateOnChange: true,
+        validateOnBlur: true
+    });
+    
+    // Khởi tạo select2 cho keywords, tags và related faqs
+    $('#keywords').select2({
+        tags: true,
+        tokenSeparators: [',', ' '],
+        placeholder: 'Nhập từ khóa, phân tách bằng dấu phẩy'
+    });
+    
+    $('#tags').select2({
+        tags: true,
+        tokenSeparators: [',', ' '],
+        placeholder: 'Nhập tags, phân tách bằng dấu phẩy'
+    });
+    
+    $('#related_faqs').select2({
+        placeholder: 'Chọn FAQ liên quan'
+    });
+    
+    // Xử lý submit form
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (validator.validate()) {
+            // TODO: Gửi form data lên server
+            console.log('Form data:', new FormData(form));
+        }
+    });
+});
+</script>
+{% endblock %} 

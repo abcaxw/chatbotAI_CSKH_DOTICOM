@@ -1,0 +1,272 @@
+/* Document List CSS */
+:root {
+    --document-primary: #4ecdc4;  /* Màu chủ đạo cho Document */
+}
+
+/* Override header icon color */
+.page-header h2 i {
+    color: var(--document-primary);
+}
+
+/* Override primary button color */
+.btn-add {
+    background-color: var(--document-primary);
+}
+
+.btn-add:hover {
+    background-color: #3dbdb4;
+}
+
+.search-box button {
+    background-color: var(--document-primary);
+}
+
+/* Document Table Styles */
+.documents-table {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.documents-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.documents-table th, 
+.documents-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.documents-table th {
+    background-color: var(--light-color);
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.documents-table tr:hover {
+    background-color: rgba(78, 205, 196, 0.05);
+}
+
+.document-title {
+    display: flex;
+    align-items: center;
+}
+
+.document-icon {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.document-icon.pdf {
+    color: #e74c3c;
+}
+
+.document-icon.doc {
+    color: #3498db;
+}
+
+.document-icon.xls {
+    color: #2ecc71;
+}
+
+.document-icon.ppt {
+    color: #e67e22;
+}
+
+.document-icon.txt {
+    color: #95a5a6;
+}
+
+.document-title span {
+    font-weight: 500;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.view-action, .edit-action, .delete-action {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s;
+}
+
+.view-action {
+    background-color: #17a2b8;
+}
+
+.edit-action {
+    background-color: var(--document-primary);
+}
+
+.delete-action {
+    background-color: var(--danger-color);
+}
+
+.view-action:hover {
+    background-color: #138496;
+}
+
+.edit-action:hover {
+    background-color: #3dbdb4;
+}
+
+.delete-action:hover {
+    background-color: #c0392b;
+}
+
+/* Document Card View (Alternative) */
+.documents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.document-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.document-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px var(--shadow-color);
+}
+
+.document-card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+}
+
+.document-card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.document-card-title {
+    flex: 1;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.document-card-body {
+    padding: 1.5rem;
+}
+
+.document-card-info {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.document-card-info i {
+    width: 20px;
+    margin-right: 0.5rem;
+    color: var(--document-primary);
+}
+
+.document-card-actions {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+/* View toggle button */
+.view-toggle {
+    display: flex;
+    margin-left: auto;
+    margin-bottom: 1rem;
+}
+
+.view-toggle button {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.view-toggle button:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.view-toggle button:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+.view-toggle button.active {
+    background-color: var(--document-primary);
+    color: white;
+    border-color: var(--document-primary);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .documents-table {
+        overflow-x: auto;
+    }
+    
+    .documents-table th, 
+    .documents-table td {
+        padding: 0.8rem;
+    }
+    
+    .documents-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .actions {
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+    
+    .document-card-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .document-card-icon {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .documents-grid {
+        grid-template-columns: 1fr;
+    }
+} 

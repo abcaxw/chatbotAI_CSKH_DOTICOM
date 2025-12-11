@@ -1,0 +1,102 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Quản lý Danh mục - Đồng Tiến & Bonpas{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', path='/css/pages/category/list.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2><i class="fas fa-list"></i> Quản lý Danh mục</h2>
+    <a href="/category/add" class="btn-add"><i class="fas fa-plus"></i> Thêm Danh mục Mới</a>
+</div>
+
+<div class="search-filter-container">
+    <div class="search-box">
+        <form action="/category/web" method="get">
+            <input type="text" name="q" placeholder="Tìm kiếm danh mục..." value="{{ query }}">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+    <div class="filter-options">
+        <select id="filter-type" name="type">
+            <option value="">Tất cả loại</option>
+            <option value="cake" {% if type_filter == 'cake' %}selected{% endif %}>Bánh</option>
+            <option value="document" {% if type_filter == 'document' %}selected{% endif %}>Tài liệu</option>
+            <option value="faq" {% if type_filter == 'faq' %}selected{% endif %}>FAQ</option>
+        </select>
+    </div>
+</div>
+
+<div class="view-toggle">
+    <button id="list-view-btn"><i class="fas fa-list"></i></button>
+    <button id="grid-view-btn" class="active"><i class="fas fa-th-large"></i></button>
+</div>
+
+<!-- List View -->
+<div id="list-view" class="categories-list" style="display: none;">
+    <div class="card-body">
+        <ul id="category-list" class="list-group">
+            <!-- Danh sách danh mục sẽ được hiển thị ở đây -->
+        </ul>
+    </div>
+</div>
+
+<!-- Grid View -->
+<div id="grid-view" class="categories-grid">
+    {% for category in categories %}
+    <div class="category-card">
+        <div class="category-icon">
+            <i class="fas {% if category.type == 'cake' %}fa-birthday-cake{% elif category.type == 'document' %}fa-file-alt{% elif category.type == 'faq' %}fa-question-circle{% else %}fa-folder{% endif %}"></i>
+        </div>
+        <div class="category-info">
+            <h3 class="category-name">{{ category.name }}</h3>
+            <div class="category-type">
+                <i class="fas fa-tag"></i>
+                {% if category.type == 'cake' %}Bánh{% elif category.type == 'document' %}Tài liệu{% elif category.type == 'faq' %}FAQ{% else %}Khác{% endif %}
+            </div>
+            <span class="category-count">{{ category.item_count }} mục</span>
+        </div>
+        <div class="category-actions">
+            <a href="/category/edit/{{ category.id }}" class="edit-action" title="Sửa"><i class="fas fa-edit"></i></a>
+            <a href="#" class="delete-action" data-id="{{ category.id }}" data-usage="{{ category.item_count }}" title="Xóa"><i class="fas fa-trash"></i></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="pagination">
+    {% if page > 1 %}
+    <a href="/category/web?page={{ page - 1 }}&q={{ query }}&type={{ type_filter }}" class="page-link"><i class="fas fa-chevron-left"></i></a>
+    {% endif %}
+    
+    {# Tính toán giới hạn trang hiển thị #}
+    {% set start_page = page - 2 if page - 2 > 0 else 1 %}
+    {% set end_page = page + 2 if page + 2 < total_pages else total_pages %}
+    
+    {% for p in range(start_page, end_page + 1) %}
+    <a href="/category/web?page={{ p }}&q={{ query }}&type={{ type_filter }}" class="page-link {% if p == page %}active{% endif %}">{{ p }}</a>
+    {% endfor %}
+    
+    {% if page < total_pages %}
+    <a href="/category/web?page={{ page + 1 }}&q={{ query }}&type={{ type_filter }}" class="page-link"><i class="fas fa-chevron-right"></i></a>
+    {% endif %}
+</div>
+
+<!-- Modal xác nhận xóa -->
+<div id="delete-modal" class="modal">
+    <div class="modal-content">
+        <h3>Xác nhận xóa</h3>
+        <p id="delete-modal-message">Bạn có chắc chắn muốn xóa danh mục này?</p>
+        <div class="modal-actions">
+            <button id="confirm-delete" class="btn-delete">Xóa</button>
+            <button id="cancel-delete" class="btn-cancel">Hủy</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='/js/pages/category/list.js') }}"></script>
+{% endblock %} 

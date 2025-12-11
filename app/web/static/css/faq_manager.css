@@ -1,0 +1,203 @@
+/* faq_manager.css (hoặc document_manager.css) - CỐ ĐỊNH PHÂN TRANG VÀ FOOTER - Phiên bản ĐÃ CHỈNH SỬA LẠI */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative; /* Quan trọng cho footer */
+}
+
+header {
+    background-color: #004085;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav a {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    position: relative; /* Quan trọng cho phân trang */
+}
+
+/* Search bar */
+.search-bar form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-bar input, .search-bar button {
+    padding: 10px;
+    font-size: 1rem;
+}
+
+button[type="submit"] {
+    background-color: #004085;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #002752;
+}
+
+/* Vùng cuộn cho bảng */
+.faq-list {
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.faq-list table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.faq-list th, .faq-list td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.faq-list th {
+    background-color: #007bff;
+    color: white;
+}
+
+.faq-list tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* **PHÂN TRANG - CỐ ĐỊNH, CHẮC CHẮN HIỂN THỊ** */
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px 0; /* Thêm padding trên dưới */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #f4f4f4; /* Màu nền giống body để hòa nhập (tùy chọn) */
+    z-index: 10; /* **Quan trọng: Đảm bảo phân trang luôn ở trên footer** */
+}
+
+.pagination div {
+    display: inline-block;
+    background-color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.pagination a {
+    padding: 10px 15px;
+    text-decoration: none;
+    margin: 0 5px;
+    color: #007bff;
+    border: 1px solid #ddd;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* **FOOTER - CỐ ĐỊNH, CHẮC CHẮN HIỂN THỊ DƯỚI PHÂN TRANG** */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #004085;
+    color: white;
+    bottom: 0;
+    width: 100%;
+    position: absolute;
+    z-index: 5; /* **Quan trọng: Đảm bảo footer ở dưới phân trang** */
+}
+
+
+/* Form thêm/sửa FAQ (style không đổi) */
+.add-faq-form form, .edit-faq-form form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-faq-form .form-group, .edit-faq-form .form-group {
+    margin-bottom: 15px;
+}
+
+.add-faq-form label, .edit-faq-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.add-faq-form input[type="text"],
+.add-faq-form textarea,
+.edit-faq-form input[type="text"],
+.edit-faq-form textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.add-faq-form textarea, .edit-faq-form textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+
+.add-faq-form button[type="submit"],
+.add-faq-form button[type="button"],
+.edit-faq-form button[type="submit"],
+.edit-faq-form button[type="button"] {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    background-color: #004085;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.add-faq-form button[type="submit"]:hover,
+.add-faq-form button[type="button"]:hover,
+.edit-faq-form button[type="submit"]:hover,
+.edit-faq-form button[type="button"]:hover {
+    background-color: #002752;
+}
+

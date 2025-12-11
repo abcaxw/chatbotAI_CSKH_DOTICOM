@@ -1,0 +1,142 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Quản lý Tài liệu - Đồng Tiến & Bonpas{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', path='/css/pages/document/list.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2><i class="fas fa-file-alt"></i> Quản lý Tài liệu</h2>
+    <a href="/document/add" class="btn-add"><i class="fas fa-plus"></i> Thêm Tài liệu Mới</a>
+</div>
+
+<div class="search-filter-container">
+    <div class="search-box">
+        <form action="/document/web" method="get">
+            <input type="text" name="q" placeholder="Tìm kiếm tài liệu..." value="{{ query }}">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+    <div class="filter-options">
+        <select id="filter-category" name="category">
+            <option value="">Tất cả danh mục</option>
+            {% for category in categories %}
+            <option value="{{ category.id }}" {% if category_filter == category.id %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <select id="filter-date" name="date">
+            <option value="">Tất cả thời gian</option>
+            <option value="today" {% if date_filter == 'today' %}selected{% endif %}>Hôm nay</option>
+            <option value="week" {% if date_filter == 'week' %}selected{% endif %}>Tuần này</option>
+            <option value="month" {% if date_filter == 'month' %}selected{% endif %}>Tháng này</option>
+        </select>
+    </div>
+</div>
+
+<div class="view-toggle">
+    <button id="list-view-btn" class="active"><i class="fas fa-list"></i></button>
+    <button id="grid-view-btn"><i class="fas fa-th-large"></i></button>
+</div>
+
+<!-- Table View -->
+<div id="list-view" class="documents-table">
+    <table>
+        <thead>
+            <tr>
+                <th>Tiêu đề</th>
+                <th>Danh mục</th>
+                <th>Ngày tạo</th>
+                <th>Tác giả</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for document in documents %}
+            <tr>
+                <td class="document-title">
+                    <i class="fas fa-file-pdf document-icon {% if document.file_type %}{{ document.file_type }}{% endif %}"></i>
+                    <span>{{ document.title }}</span>
+                </td>
+                <td>{{ document.category_name }}</td>
+                <td>{{ document.created_at }}</td>
+                <td>{{ document.author }}</td>
+                <td class="actions">
+                    <a href="/document/view/{{ document.id }}" class="view-action" title="Xem"><i class="fas fa-eye"></i></a>
+                    <a href="/document/edit/{{ document.id }}" class="edit-action" title="Sửa"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="delete-action" data-id="{{ document.id }}" title="Xóa"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Grid View -->
+<div id="grid-view" class="documents-grid" style="display: none;">
+    {% for document in documents %}
+    <div class="document-card">
+        <div class="document-card-header">
+            <div class="document-card-icon">
+                <i class="fas fa-file-pdf {% if document.file_type %}{{ document.file_type }}{% endif %}"></i>
+            </div>
+            <h3 class="document-card-title">{{ document.title }}</h3>
+        </div>
+        <div class="document-card-body">
+            <div class="document-card-info">
+                <i class="fas fa-folder"></i>
+                <span>{{ document.category_name }}</span>
+            </div>
+            <div class="document-card-info">
+                <i class="fas fa-calendar"></i>
+                <span>{{ document.created_at }}</span>
+            </div>
+            <div class="document-card-info">
+                <i class="fas fa-user"></i>
+                <span>{{ document.author }}</span>
+            </div>
+        </div>
+        <div class="document-card-actions">
+            <a href="/document/view/{{ document.id }}" class="view-action" title="Xem"><i class="fas fa-eye"></i></a>
+            <a href="/document/edit/{{ document.id }}" class="edit-action" title="Sửa"><i class="fas fa-edit"></i></a>
+            <a href="#" class="delete-action" data-id="{{ document.id }}" title="Xóa"><i class="fas fa-trash"></i></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="pagination">
+    {% if page > 1 %}
+    <a href="/document/web?page={{ page - 1 }}&q={{ query }}&category={{ category_filter }}&date={{ date_filter }}" class="page-link"><i class="fas fa-chevron-left"></i></a>
+    {% endif %}
+    
+    {# Tính toán giới hạn trang hiển thị #}
+    {% set start_page = page - 2 if page - 2 > 0 else 1 %}
+    {% set end_page = page + 2 if page + 2 < total_pages else total_pages %}
+    
+    {% for p in range(start_page, end_page + 1) %}
+    <a href="/document/web?page={{ p }}&q={{ query }}&category={{ category_filter }}&date={{ date_filter }}" class="page-link {% if p == page %}active{% endif %}">{{ p }}</a>
+    {% endfor %}
+    
+    {% if page < total_pages %}
+    <a href="/document/web?page={{ page + 1 }}&q={{ query }}&category={{ category_filter }}&date={{ date_filter }}" class="page-link"><i class="fas fa-chevron-right"></i></a>
+    {% endif %}
+</div>
+
+<!-- Modal xác nhận xóa -->
+<div id="delete-modal" class="modal">
+    <div class="modal-content">
+        <h3>Xác nhận xóa</h3>
+        <p>Bạn có chắc chắn muốn xóa tài liệu này?</p>
+        <div class="modal-actions">
+            <button id="confirm-delete" class="btn-delete">Xóa</button>
+            <button id="cancel-delete" class="btn-cancel">Hủy</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='/js/pages/document/list.js') }}"></script>
+{% endblock %} 

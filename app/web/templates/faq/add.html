@@ -1,0 +1,122 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Thêm FAQ Mới{% endblock %}
+
+{% block page_css %}
+{{ super() }}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{ url_for('static', path='css/pages/faq/add.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Thêm FAQ Mới</h3>
+                </div>
+                <div class="card-body">
+                    <form id="addFaqForm" method="POST">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="title">Tiêu đề <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="title" name="title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="question">Câu hỏi <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="question" name="question" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="answer">Câu trả lời <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="answer" name="answer" rows="6" required></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="source">Nguồn tham khảo</label>
+                                    <input type="text" class="form-control" id="source" name="source">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="user">Người tạo</label>
+                                    <input type="text" class="form-control" id="user" name="user">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Lưu
+                                </button>
+                                <a href="{{ url_for('faq.get') }}" class="btn btn-secondary">
+                                    <i class="fas fa-times"></i> Hủy
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+{{ super() }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('addFaqForm');
+    
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        try {
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang lưu...';
+            submitBtn.disabled = true;
+
+            // Prepare FAQ data
+            const faqData = {
+                title: document.getElementById('title').value,
+                question: document.getElementById('question').value,
+                answer: document.getElementById('answer').value,
+                source: document.getElementById('source').value,
+                user: document.getElementById('user').value
+            };
+
+            console.log('Sending FAQ data:', faqData);
+
+            // Send API request
+            const response = await fetch('/faq/add_faqs', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify([faqData]) // API expects an array of FAQs
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert('Thêm FAQ thành công!');
+                window.location.href = '/faq/web';
+            } else {
+                throw new Error(result.detail?.message || result.message || 'Có lỗi xảy ra');
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            alert(error.message || 'Có lỗi xảy ra khi thêm FAQ. Vui lòng thử lại');
+        } finally {
+            // Reset button state
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+});
+</script>
+{% endblock %} 

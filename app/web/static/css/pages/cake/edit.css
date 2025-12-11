@@ -1,0 +1,346 @@
+/* CSS for Cake Edit Page */
+
+.container-fluid {
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 60px);
+}
+
+.page-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #e3e6f0;
+    padding-bottom: 1rem;
+}
+
+.page-header h2 {
+    color: #4e73df;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.page-header h2 i {
+    margin-right: 0.5rem;
+    color: #f6c23e;
+}
+
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eaeaea;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #5a5c69;
+}
+
+/* Mô tả textarea được dài hơn */
+#description {
+    min-height: 150px; /* Tăng chiều cao mặc định */
+    resize: vertical; /* Cho phép resize theo chiều dọc */
+    line-height: 1.5;
+    font-size: 0.95rem;
+    padding: 10px;
+}
+
+/* Thêm thanh cuộn khi nội dung dài */
+#description:focus {
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+    border-color: #bac8f3;
+}
+
+/* Custom scrollbar cho textarea */
+#description::-webkit-scrollbar {
+    width: 8px;
+}
+
+#description::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#description::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+#description::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+.text-danger {
+    color: #dc3545;
+}
+
+.custom-file {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.custom-file-input {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    margin: 0;
+    opacity: 0;
+}
+
+.custom-file-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+#imagePreview {
+    border: 1px dashed #d1d3e2;
+    padding: 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#imagePreview img {
+    max-height: 200px;
+    object-fit: contain;
+}
+
+.image-gallery-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.gallery-image-item {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.gallery-image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-image-item .remove-image {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #dc3545;
+}
+
+.btn {
+    font-weight: 400;
+    border-radius: 4px;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #4e73df;
+    border-color: #4e73df;
+}
+
+.btn-primary:hover {
+    background-color: #2e59d9;
+    border-color: #2e59d9;
+}
+
+.btn-secondary {
+    background-color: #858796;
+    border-color: #858796;
+}
+
+.btn-secondary:hover {
+    background-color: #717384;
+    border-color: #717384;
+}
+
+.btn-success {
+    background-color: #1cc88a;
+    border-color: #1cc88a;
+}
+
+.btn-success:hover {
+    background-color: #17a673;
+    border-color: #17a673;
+}
+
+.btn-danger {
+    background-color: #e74a3b;
+    border-color: #e74a3b;
+}
+
+.btn-danger:hover {
+    background-color: #e02d1b;
+    border-color: #e02d1b;
+}
+
+.btn i {
+    margin-right: 0.25rem;
+}
+
+/* Select2 customizations */
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-selection {
+    border: 1px solid #ced4da !important;
+    border-radius: 0.25rem !important;
+    height: calc(1.5em + 0.75rem + 2px) !important;
+}
+
+/* Price inputs */
+.input-group-prepend .input-group-text {
+    background-color: #f8f9fa;
+    border-right: none;
+}
+
+.price-input {
+    border-left: none;
+}
+
+/* Stats section */
+.stats-section {
+    margin-top: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.stats-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.stats-item i {
+    margin-right: 10px;
+    color: #6c757d;
+}
+
+/* Price & Type section */
+.price-type-row {
+    background-color: #f8f9fc;
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid #e3e6f0;
+    transition: all 0.3s ease;
+}
+
+.price-type-row:hover {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.btn-remove-price-type {
+    transition: all 0.2s ease;
+}
+
+.btn-remove-price-type:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .col-md-4, .col-md-8 {
+        margin-bottom: 20px;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .card-actions {
+        margin-top: 10px;
+    }
+    
+    .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .btn-danger {
+        margin-bottom: 0;
+    }
+    
+    .row.mt-4 .btn:not(:last-child) {
+        margin-right: 0 !important;
+    }
+    
+    #description {
+        min-height: 120px;
+    }
+    
+    .price-type-row .row {
+        margin-bottom: 10px;
+    }
+    
+    .btn-remove-price-type {
+        margin-top: 10px;
+    }
+} 

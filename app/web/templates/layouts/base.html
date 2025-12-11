@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Đồng Tiến & Bonpas{% endblock %}</title>
+    
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/base.css') }}">
+    
+    <!-- Component CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/components/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/components/footer.css') }}">
+    
+    <!-- Page specific CSS -->
+    {% block page_css %}{% endblock %}
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="main-header">
+            <div class="logo-container">
+                <img src="{{ url_for('static', path='/images/logo.png') }}" alt="Đồng Tiến & Bonpas Logo" class="logo">
+                <h1>Đồng Tiến & Bonpas</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/cake/web" {% if active_page == 'cake' %}class="active"{% endif %}><i class="fas fa-birthday-cake"></i> Quản lý Bánh</a></li>
+                    <li><a href="/document/web" {% if active_page == 'document' %}class="active"{% endif %}><i class="fas fa-file-alt"></i> Quản lý Tài liệu</a></li>
+                    <li><a href="/faq/web" {% if active_page == 'faq' %}class="active"{% endif %}><i class="fas fa-question-circle"></i> Quản lý FAQ</a></li>
+                    <li><a href="/category/web" {% if active_page == 'category' %}class="active"{% endif %}><i class="fas fa-list"></i> Quản lý Danh mục</a></li>
+                    <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main Content Section -->
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+
+        <!-- Footer Section -->
+        <footer class="main-footer">
+            <p>&copy; {{ now.year }} Đồng Tiến & Bonpas. Tất cả các quyền đã được bảo lưu.</p>
+        </footer>
+    </div>
+
+    <!-- Common JS -->
+    <script src="{{ url_for('static', path='/js/components/notification.js') }}"></script>
+    <script src="{{ url_for('static', path='/js/components/modal.js') }}"></script>
+    
+    <!-- Page specific JS -->
+    {% block page_js %}{% endblock %}
+</body>
+</html> 

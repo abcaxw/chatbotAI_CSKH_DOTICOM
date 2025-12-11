@@ -1,0 +1,57 @@
+<header class="main-header">
+    <div class="container">
+        <div class="header-content">
+            <div class="header-logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="Đồng Tiến & Bonpas" class="logo-img">
+                    <span class="logo-text">Đồng Tiến & Bonpas</span>
+                </a>
+            </div>
+            
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item {% if active_page == 'cake' %}active{% endif %}">
+                        <a href="/cake" class="nav-link">
+                            <i class="fas fa-birthday-cake"></i>
+                            <span>Quản lý Bánh</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {% if active_page == 'document' %}active{% endif %}">
+                        <a href="/document" class="nav-link">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Quản lý Tài liệu</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {% if active_page == 'faq' %}active{% endif %}">
+                        <a href="/faq" class="nav-link">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Quản lý FAQ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {% if active_page == 'category' %}active{% endif %}">
+                        <a href="/category" class="nav-link">
+                            <i class="fas fa-tags"></i>
+                            <span>Quản lý Danh mục</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <div class="dropdown user-dropdown">
+                    <button class="dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/images/avatar.png" alt="User" class="user-avatar">
+                        <span class="user-name">Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="/profile"><i class="fas fa-user"></i> Hồ sơ</a></li>
+                        <li><a class="dropdown-item" href="/settings"><i class="fas fa-cog"></i> Cài đặt</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header> 

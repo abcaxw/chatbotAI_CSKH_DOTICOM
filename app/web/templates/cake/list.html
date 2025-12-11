@@ -1,0 +1,150 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Quản lý Bánh - Đồng Tiến & Bonpas{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', path='/css/pages/cake/list.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2><i class="fas fa-birthday-cake"></i> Quản lý Bánh</h2>
+    <a href="/cake/add" class="btn-add"><i class="fas fa-plus"></i> Thêm Bánh Mới</a>
+</div>
+
+<div class="search-filter-container">
+    <div class="search-box">
+        <form action="/cake/web" method="get">
+            <input type="text" name="q" placeholder="Tìm kiếm bánh..." value="{{ query }}">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+    <div class="filter-options">
+        <select id="filter-category" name="category">
+            <option value="">Tất cả danh mục</option>
+            {% for category in categories %}
+            <option value="{{ category.id }}" {% if category_filter == category.id %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <select id="filter-source" name="source">
+            <option value="">Tất cả nguồn</option>
+            <option value="BonPas" {% if source_filter =='BonPas' %}selected{% endif %}>BonPas</option>
+            <option value="DongTien" {% if source_filter =='DongTien' %}selected{% endif %}>DongTien</option>
+        </select>
+        <select id="filter-price" name="price">
+            <option value="">Tất cả mức giá</option>
+            <option value="0-250000" {% if price_filter =='0-250000' %}selected{% endif %}>Dưới 250,000₫</option>
+            <option value="250000-500000" {% if price_filter =='250000-500000' %}selected{% endif %}>250,000₫ - 500,000₫</option>
+            <option value="500000-1000000" {% if price_filter =='500000-1000000' %}selected{% endif %}>500,000₫ - 1,000,000₫</option>
+            <option value="1000000+" {% if price_filter =='1000000+' %}selected{% endif %}>Trên 1,000,000₫</option>
+        </select>
+    </div>
+</div>
+
+<div class="view-toggle">
+    <button id="list-view-btn"><i class="fas fa-list"></i></button>
+    <button id="grid-view-btn" class="active"><i class="fas fa-th-large"></i></button>
+</div>
+
+<!-- List View -->
+<div id="list-view" class="cakes-table" style="display: none;">
+    <table>
+        <thead>
+            <tr>
+                <th>Hình ảnh</th>
+                <th>Tên bánh</th>
+                <th>Danh mục</th>
+                <th>Giá</th>
+                <th>Mô tả</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cake in cakes %}
+            <tr>
+                <td class="cake-img-cell">
+                    <img src="{{ cake.image_url or url_for('static', path='/images/cake-placeholder.png') }}" alt="{{ cake.name }}" class="cake-image">
+                </td>
+                <td>{{ cake.name }}</td>
+                <td>{{ cake.category_name }}</td>
+                <td class="cake-price-range">{{ cake.price_range }}</td>
+                <td class="cake-description">{{ cake.description[:100] }}{% if cake.description|length > 100 %}...{% endif %}</td>
+                <td class="actions">
+                    <a href="/cake/view/{{ cake.id }}" class="view-action" title="Xem"><i class="fas fa-eye"></i></a>
+                    <a href="/cake/edit/{{ cake.id }}" class="edit-action" title="Sửa"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="delete-action" data-id="{{ cake.id }}" title="Xóa"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Grid View -->
+<div id="grid-view" class="cakes-grid">
+    {% for cake in cakes %}
+    <div class="cake-card">
+        <div class="cake-card-image">
+            <img src="{{ cake.image_url or url_for('static', path='/images/cake-placeholder.png') }}" alt="{{ cake.name }}" class="cake-image">
+        </div>
+        <div class="cake-card-body">
+            <h3 class="cake-card-title">{{ cake.name }}</h3>
+            <div class="cake-card-category">
+                <i class="fas fa-tag"></i> {{ cake.category_name }}
+            </div>
+            <div class="cake-price-range">{{ cake.price_range }}</div>
+            <div class="cake-card-description">
+                {{ cake.description[:100] }}{% if cake.description|length > 100 %}...{% endif %}
+            </div>
+        </div>
+        <div class="cake-card-actions">
+            <a href="/cake/view/{{ cake.id }}" class="view-action" title="Xem"><i class="fas fa-eye"></i></a>
+            <a href="/cake/edit/{{ cake.id }}" class="edit-action" title="Sửa"><i class="fas fa-edit"></i></a>
+            <a href="#" class="delete-action" data-id="{{ cake.id }}" title="Xóa"><i class="fas fa-trash"></i></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="pagination">
+    {% if page > 1 %}
+    <a href="/cake/web?page={{ page - 1 }}&q={{ query }}&category={{ category_filter }}&price={{ price_filter }}&source={{ source_filter }}" class="page-link"><i class="fas fa-chevron-left"></i></a>
+    {% endif %}
+    
+    {# Tính toán giới hạn trang hiển thị #}
+    {% set start_page = page - 2 if page - 2 > 0 else 1 %}
+    {% set end_page = page + 2 if page + 2 < total_pages else total_pages %}
+    
+    {% for p in range(start_page, end_page + 1) %}
+    <a href="/cake/web?page={{ p }}&q={{ query }}&category={{ category_filter }}&price={{ price_filter }}&source={{ source_filter }}" class="page-link {% if p == page %}active{% endif %}">{{ p }}</a>
+    {% endfor %}
+    
+    {% if page < total_pages %}
+    <a href="/cake/web?page={{ page + 1 }}&q={{ query }}&category={{ category_filter }}&price={{ price_filter }}&source={{ source_filter }}" class="page-link"><i class="fas fa-chevron-right"></i></a>
+    {% endif %}
+</div>
+
+<!-- Modal xác nhận xóa -->
+<div id="delete-modal" class="modal">
+    <div class="modal-content">
+        <h3>Xác nhận xóa</h3>
+        <p>Bạn có chắc chắn muốn xóa bánh này?</p>
+        <div class="modal-actions">
+            <button id="confirm-delete" class="btn-delete">Xóa</button>
+            <button id="cancel-delete" class="btn-cancel">Hủy</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal xem trước ảnh -->
+<div id="image-preview-modal" class="modal">
+    <div class="modal-content image-preview-content">
+        <button id="close-preview" class="close-preview"><i class="fas fa-times"></i></button>
+        <img id="preview-image" src="" alt="Xem trước bánh">
+    </div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', path='/js/pages/cake/list.js') }}"></script>
+{% endblock %} 

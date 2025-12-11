@@ -1,0 +1,322 @@
+/* FAQ List CSS */
+:root {
+    --faq-primary: #ff6b6b;  /* Màu chủ đạo cho FAQ */
+}
+
+/* Override header icon color */
+.page-header h2 i {
+    color: var(--faq-primary);
+}
+
+/* FAQ Accordion Styles */
+.faq-accordion {
+    margin-bottom: 2rem;
+}
+
+.faq-item {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.faq-header {
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.faq-header:hover {
+    background-color: rgba(255, 107, 107, 0.05);
+}
+
+.faq-title {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.faq-icon {
+    color: var(--faq-primary);
+    font-size: 1.3rem;
+    margin-right: 1rem;
+}
+
+.faq-title h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.faq-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.faq-category {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background-color: var(--light-color);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    color: var(--dark-color);
+}
+
+.edit-action, .delete-action {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s;
+}
+
+.edit-action {
+    background-color: var(--secondary-color);
+}
+
+.delete-action {
+    background-color: var(--danger-color);
+}
+
+.edit-action:hover {
+    background-color: #3dbdb4;
+}
+
+.delete-action:hover {
+    background-color: #c0392b;
+}
+
+.toggle-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-color);
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.toggle-btn:hover {
+    background-color: var(--border-color);
+}
+
+.toggle-btn.active {
+    transform: rotate(180deg);
+    background-color: var(--faq-primary);
+    color: white;
+}
+
+.faq-content {
+    padding: 0 1.5rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-content.active {
+    max-height: 500px;
+    padding: 0 1.5rem 1.5rem;
+}
+
+.faq-answer {
+    line-height: 1.6;
+    color: #666;
+}
+
+/* Search and Filter with Category Badge */
+.filter-badge {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background-color: var(--light-color);
+    border-radius: 50px;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.filter-badge:hover {
+    background-color: var(--border-color);
+}
+
+.filter-badge.active {
+    background-color: var(--faq-primary);
+    color: white;
+}
+
+.filter-badges {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+/* Additional Styles for FAQ Card View */
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.faq-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.faq-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px var(--shadow-color);
+}
+
+.faq-card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+}
+
+.faq-card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 107, 107, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.faq-card-icon i {
+    color: var(--faq-primary);
+    font-size: 1.2rem;
+}
+
+.faq-card-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.faq-card-body {
+    padding: 1.5rem;
+}
+
+.faq-card-answer {
+    margin-bottom: 1rem;
+    max-height: 100px;
+    overflow: hidden;
+    position: relative;
+}
+
+.faq-card-answer::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(transparent, white);
+}
+
+.faq-card-category {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background-color: var(--light-color);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.faq-card-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+/* View toggle button */
+.view-toggle {
+    display: flex;
+    margin-left: auto;
+    margin-bottom: 1rem;
+}
+
+.view-toggle button {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.view-toggle button:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.view-toggle button:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+.view-toggle button.active {
+    background-color: var(--faq-primary);
+    color: white;
+    border-color: var(--faq-primary);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .faq-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .faq-actions {
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
+    .faq-category {
+        margin-right: auto;
+    }
+
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .filter-badges {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .filter-badge {
+        width: 100%;
+        text-align: center;
+        margin-right: 0;
+    }
+} 

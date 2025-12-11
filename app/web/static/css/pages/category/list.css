@@ -1,0 +1,273 @@
+/* Category List CSS */
+:root {
+    --category-primary: #ffd166;  /* Màu chủ đạo cho Category */
+}
+
+/* Override header icon color */
+.page-header h2 i {
+    color: var(--category-primary);
+}
+
+/* Override primary button color */
+.btn-add {
+    background-color: var(--category-primary);
+    color: var(--text-color); /* Category có màu sáng nên text đen */
+}
+
+.btn-add:hover {
+    background-color: #ffc233;
+}
+
+.search-box button {
+    background-color: var(--category-primary);
+    color: var(--text-color);
+}
+
+/* Category Grid Styles */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.category-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.category-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--category-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.category-icon i {
+    font-size: 1.8rem;
+    color: var(--text-color);
+}
+
+.category-info {
+    flex: 1;
+}
+
+.category-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+    color: var(--text-color);
+}
+
+.category-type {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.category-type i {
+    margin-right: 0.5rem;
+    color: var(--category-primary);
+}
+
+.category-count {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background-color: var(--light-color);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    color: var(--dark-color);
+}
+
+.category-actions {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.category-actions a {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s;
+}
+
+.edit-action {
+    background-color: var(--secondary-color);
+}
+
+.delete-action {
+    background-color: var(--danger-color);
+}
+
+.edit-action:hover {
+    background-color: #3dbdb4;
+}
+
+.delete-action:hover {
+    background-color: #c0392b;
+}
+
+/* Category List Styles (Alternative) */
+.categories-list {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.category-list-item {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.category-list-item:last-child {
+    border-bottom: none;
+}
+
+.category-list-item:hover {
+    background-color: rgba(255, 209, 102, 0.05);
+}
+
+.category-list-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--category-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.category-list-icon i {
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.category-list-info {
+    flex: 1;
+}
+
+.category-list-name {
+    font-weight: 600;
+    margin: 0 0 0.2rem;
+    color: var(--text-color);
+}
+
+.category-list-meta {
+    display: flex;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.category-list-type {
+    margin-right: 1rem;
+}
+
+.category-list-count {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background-color: var(--light-color);
+    border-radius: 50px;
+    font-size: 0.75rem;
+}
+
+.category-list-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* View toggle button */
+.view-toggle {
+    display: flex;
+    margin-left: auto;
+    margin-bottom: 1rem;
+}
+
+.view-toggle button {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.view-toggle button:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.view-toggle button:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+.view-toggle button.active {
+    background-color: var(--category-primary);
+    color: var(--text-color);
+    border-color: var(--category-primary);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .categories-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .category-list-item {
+        flex-wrap: wrap;
+    }
+    
+    .category-list-actions {
+        width: 100%;
+        margin-top: 1rem;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 576px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .category-list-meta {
+        flex-direction: column;
+    }
+    
+    .category-list-type {
+        margin-right: 0;
+        margin-bottom: 0.3rem;
+    }
+} 

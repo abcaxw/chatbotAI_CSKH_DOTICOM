@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký - Trường Đại học Đà Nẵng</title>
+    <link rel="stylesheet" href="/static/css/register.css">
+</head>
+<body>
+    <div class="register-container">
+        <form action="/register" method="post">
+            <img src="/static/images/doti-logo.png" alt="Logo DOTICOM" class="logo">
+            <h2>Đăng ký tài khoản mới</h2>
+            <input type="text" name="username" placeholder="Tên đăng nhập" required>
+            <input type="text" name="phone" placeholder="Số điện thoại" required>
+            <input type="password" name="password" placeholder="Mật khẩu" required>
+            <select name="role">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+            <button type="submit">Đăng ký</button>
+            <p>Đã có tài khoản? <a href="/login">Đăng nhập</a></p>
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
